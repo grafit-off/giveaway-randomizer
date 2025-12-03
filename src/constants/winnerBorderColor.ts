@@ -1,0 +1,1 @@
+export const WINNER_BORDER_COLOR = '#9147FF'

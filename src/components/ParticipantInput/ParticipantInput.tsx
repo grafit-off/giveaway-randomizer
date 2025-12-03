@@ -1,10 +1,6 @@
 import { useState, FormEvent } from 'react'
-import './ParticipantInput.css'
-
-interface ParticipantInputProps {
-  onAddParticipant: (name: string) => void
-  disabled: boolean
-}
+import { ParticipantInputProps } from '../../models/ParticipantInputProps'
+import styles from './ParticipantInput.module.scss'
 
 export const ParticipantInput: React.FC<ParticipantInputProps> = ({
   onAddParticipant,
@@ -22,23 +18,22 @@ export const ParticipantInput: React.FC<ParticipantInputProps> = ({
   }
 
   return (
-    <form className="participant-input" onSubmit={handleSubmit}>
+    <form className={styles.participantInput} onSubmit={handleSubmit}>
       <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Enter participant name..."
         disabled={disabled}
-        className="participant-input-field"
+        className={styles.participantInputField}
       />
       <button
         type="submit"
         disabled={disabled || !inputValue.trim()}
-        className="participant-input-button"
+        className={styles.participantInputButton}
       >
         Add
       </button>
     </form>
   )
 }
-

@@ -1,18 +1,21 @@
 import { useState, useMemo, useEffect } from 'react'
-import { Participant, CarouselConfig } from './types'
-import { assignColorsToParticipants, generateRandomColor, loadParticipantsFromStorage, saveParticipantsToStorage } from './utils'
-import { Carousel } from './components/Carousel'
-import { ParticipantInput } from './components/ParticipantInput'
-import { WinnerMenu } from './components/WinnerMenu'
-import { ErrorModal } from './components/ErrorModal'
-import './App.css'
-
-const DEFAULT_CONFIG: CarouselConfig = {
-  tileWidth: 180,
-  visibleItems: 7,
-  fillerTilesBeforeWinner: 200 + Math.floor(Math.random() * 151), // 200-350
-  animationDuration: 6000 // 6 seconds
-}
+import { Participant } from './models/Participant'
+import { CarouselConfig } from './models/CarouselConfig'
+import { assignColorsToParticipants } from './functions/assignColorsToParticipants'
+import { generateRandomColor } from './functions/generateRandomColor'
+import { loadParticipantsFromStorage } from './functions/loadParticipantsFromStorage'
+import { saveParticipantsToStorage } from './functions/saveParticipantsToStorage'
+import { AVAILABLE_COLORS } from './constants/availableColors'
+import { DEFAULT_CONFIG } from './constants/defaultConfig'
+import { RESIZE_TIMEOUT_MS } from './constants/resizeTimeoutMs'
+import { IMAGE_COUNT } from './constants/imageCount'
+import { Carousel } from './components/Carousel/Carousel'
+import { ParticipantInput } from './components/ParticipantInput/ParticipantInput'
+import { WinnerMenu } from './components/WinnerMenu/WinnerMenu'
+import { ErrorModal } from './components/ErrorModal/ErrorModal'
+import { ConfirmationModal } from './components/ConfirmationModal/ConfirmationModal'
+import { TwitchChatSidebar } from './components/TwitchChatSidebar/TwitchChatSidebar'
+import styles from './App.module.scss'
 
 function App() {
   // Load participants from localStorage on mount
@@ -27,6 +30,19 @@ function App() {
     isOpen: false,
     message: ''
   })
+  const [confirmRemoveAll, setConfirmRemoveAll] = useState<boolean>(false)
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true) // Default: enabled
+  const [chatSidebarVisible, setChatSidebarVisible] = useState<boolean>(true) // Default: visible
+
+  // Handle chat sidebar toggle with position recalculation
+  const handleChatSidebarToggle = () => {
+    if (isAnimating) return // Don't allow toggle during animation
+    setChatSidebarVisible(!chatSidebarVisible)
+    // Trigger resize event to recalculate positions after sidebar toggle
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'))
+    }, RESIZE_TIMEOUT_MS)
+  }
 
   // Save participants to localStorage whenever they change
   useEffect(() => {
@@ -67,10 +83,9 @@ function App() {
       return
     }
 
-    // Regenerate config with new random filler tiles count
     const newConfig: CarouselConfig = {
       ...DEFAULT_CONFIG,
-      fillerTilesBeforeWinner: 200 + Math.floor(Math.random() * 151) // 200-350
+      fillerTilesBeforeWinner: DEFAULT_CONFIG.fillerTilesBeforeWinner
     }
     setConfig(newConfig)
 
@@ -118,68 +133,107 @@ function App() {
     }
   }
 
+  const handleRemoveAllParticipants = () => {
+    if (isAnimating) return // Don't allow removal during animation
+    setConfirmRemoveAll(true)
+  }
+
+  const confirmRemoveAllParticipants = () => {
+    setParticipants([])
+    setWinnerIndex(null)
+    setShowWinnerMenu(false)
+    setConfirmRemoveAll(false)
+  }
+
   const currentWinner = winnerIndex !== null ? participantsWithColors[winnerIndex] : null
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1 className="app-title">Giveaway Randomizer</h1>
-      </header>
-
-      <main className="app-main">
-        <ParticipantInput
-          onAddParticipant={handleAddParticipant}
-          disabled={isAnimating}
-        />
-
+    <div className={`${styles.app} ${!chatSidebarVisible ? styles.chatSidebarHidden : ''}`}>
+      <TwitchChatSidebar
+        channel="psragee"
+        isVisible={chatSidebarVisible}
+        onToggle={handleChatSidebarToggle}
+        disabled={isAnimating}
+      />
+      
+      <main className={styles.appMain}>
         <Carousel
           participants={participantsWithColors}
           winnerIndex={winnerIndex}
           isAnimating={isAnimating}
           onAnimationComplete={handleAnimationComplete}
           config={config}
+          soundEnabled={soundEnabled}
+          onSoundToggle={setSoundEnabled}
+          onStartRandomize={handleStartRandomize}
+          canStart={participantsWithColors.length > 0}
         />
 
-        <div className="app-controls">
-          <button
-            className="randomize-button"
-            onClick={handleStartRandomize}
-            disabled={isAnimating || participantsWithColors.length === 0}
-          >
-            {isAnimating ? 'Randomizing...' : '🎲 Start Randomizer'}
-          </button>
-        </div>
+        <div className={styles.participantsList}>
+          <div className={styles.participantsListHeader}>
+            <h3 className={styles.participantsListTitle}>Participants ({participantsWithColors.length})</h3>
+            {participantsWithColors.length > 0 && (
+              <button
+                className={styles.removeAllButton}
+                onClick={handleRemoveAllParticipants}
+                disabled={isAnimating}
+                title="Remove all participants"
+              >
+                Remove All
+              </button>
+            )}
+          </div>
+          
+          <ParticipantInput
+            onAddParticipant={handleAddParticipant}
+            disabled={isAnimating}
+          />
 
-        {participantsWithColors.length > 0 && (
-          <div className="participants-list">
-            <h3 className="participants-list-title">Participants ({participantsWithColors.length})</h3>
-            <div className="participants-grid">
-              {participantsWithColors.map((participant) => (
-                <div
-                  key={participant.id}
-                  className="participant-badge"
-                  style={{ backgroundColor: participant.color }}
-                >
-                  <span className="participant-badge-name">{participant.name}</span>
-                  <button
-                    className="participant-badge-remove"
-                    onClick={() => handleRemoveParticipant(participant.id)}
-                    disabled={isAnimating}
-                    title="Remove participant"
-                    aria-label={`Remove ${participant.name}`}
-                  >
-                    ×
-                  </button>
+          {participantsWithColors.length > 0 && (
+            <div className={styles.participantsGrid}>
+              {Array.from({ length: 6 }, (_, columnIndex) => (
+                <div key={columnIndex} className={styles.participantsColumn}>
+                  {participantsWithColors
+                    .filter((_, index) => index % 6 === columnIndex)
+                    .map((participant, participantIndex) => {
+                      const globalIndex = columnIndex + participantIndex * 6
+                      const imageIndex = globalIndex % IMAGE_COUNT
+                      const participantColor = AVAILABLE_COLORS[globalIndex % AVAILABLE_COLORS.length]
+                      return (
+                        <div
+                          key={participant.id}
+                          className={styles.participantBadge}
+                          style={{ backgroundColor: participantColor }}
+                        >
+                          <img
+                            src={`/participant-${imageIndex + 1}.png`}
+                            alt={participant.name}
+                            className={styles.participantBadgeAvatar}
+                          />
+                          <span className={styles.participantBadgeName}>{participant.name}</span>
+                          <button
+                            className={styles.participantBadgeRemove}
+                            onClick={() => handleRemoveParticipant(participant.id)}
+                            disabled={isAnimating}
+                            title="Remove participant"
+                            aria-label={`Remove ${participant.name}`}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )
+                    })}
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </main>
 
       {showWinnerMenu && (
         <WinnerMenu
           winner={currentWinner}
+          winnerIndex={winnerIndex}
           onRemoveWinner={handleRemoveWinner}
           onContinue={handleContinue}
         />
@@ -189,6 +243,16 @@ function App() {
         isOpen={errorModal.isOpen}
         message={errorModal.message}
         onClose={() => setErrorModal({ isOpen: false, message: '' })}
+      />
+
+      <ConfirmationModal
+        isOpen={confirmRemoveAll}
+        title="Remove All Participants"
+        message="Are you sure you want to remove all participants? This action cannot be undone."
+        confirmText="Remove All"
+        cancelText="Cancel"
+        onConfirm={confirmRemoveAllParticipants}
+        onCancel={() => setConfirmRemoveAll(false)}
       />
     </div>
   )

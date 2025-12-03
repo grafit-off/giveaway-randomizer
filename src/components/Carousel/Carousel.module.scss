@@ -1,0 +1,226 @@
+.carouselContainer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 30px;
+  background-color: #18181B;
+  border-radius: 12px;
+  border: 1px solid #1F1F23;
+  margin-bottom: 20px;
+}
+
+.carouselTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 30px 0;
+  text-align: left;
+}
+
+.carouselControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.soundToggleButton {
+  background: transparent;
+  border: 2px solid #9147FF;
+  border-radius: 8px;
+  color: #9147FF;
+  cursor: pointer;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #9147FF;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(145, 71, 255, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.randomizeButton {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #9147FF 0%, #772CE8 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(145, 71, 255, 0.3);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(145, 71, 255, 0.5);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.carouselWrapper {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+  height: 300px;
+  padding: 0 15px;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.carouselCenterLine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #9147FF 10%,
+    #9147FF 90%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(145, 71, 255, 0.6),
+              0 0 20px rgba(145, 71, 255, 0.4);
+  pointer-events: none;
+}
+
+.carouselTrack {
+  display: flex;
+  will-change: transform;
+  transition: none;
+
+  &.idleAnimation {
+    transition: transform 0.1s linear;
+  }
+}
+
+.carouselTile {
+  flex-shrink: 0;
+  height: 220px;
+  border-radius: 6px;
+  margin-top: 40px;
+  border: 3px solid transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  overflow: visible;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s ease-out, transform 0.1s ease-out, box-shadow 0.2s ease-out;
+  transform-origin: center center;
+  z-index: 1;
+}
+
+.tileCentered {
+  box-shadow: 0 0 20px rgba(145, 71, 255, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: centeredGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes centeredGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(145, 71, 255, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(145, 71, 255, 0.8), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@keyframes winnerPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(145, 71, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(145, 71, 255, 0.8);
+  }
+}
+
+.tileGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.tileContent {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+}
+
+.tileAvatar {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.tileName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  word-break: break-word;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.carouselEmpty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 1.2rem;
+}

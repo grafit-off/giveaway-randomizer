@@ -1,0 +1,1 @@
+export const IDLE_LOOP_MULTIPLIER = 20

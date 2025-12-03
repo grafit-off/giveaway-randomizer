@@ -1,4 +1,4 @@
-.error-modal-overlay {
+.errorModalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -21,7 +21,7 @@
   }
 }
 
-.error-modal {
+.errorModal {
   position: relative;
   outline: none;
   animation: slideUp 0.3s ease;
@@ -38,49 +38,48 @@
   }
 }
 
-.error-modal-content {
-  background-color: #1a1a1a;
-  border: 2px solid #00E1E1;
+.errorModalContent {
+  background-color: #18181B;
+  border: 2px solid #9147FF;
   border-radius: 16px;
   padding: 40px;
   max-width: 500px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 225, 225, 0.3);
+  box-shadow: 0 8px 32px rgba(145, 71, 255, 0.3);
 }
 
-.error-modal-title {
+.errorModalTitle {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #00E1E1;
+  color: #9147FF;
 }
 
-.error-modal-message {
+.errorModalMessage {
   font-size: 1.1rem;
-  color: #ffffff;
+  color: #EFEFF1;
   margin-bottom: 30px;
   line-height: 1.6;
 }
 
-.error-modal-button {
+.errorModalButton {
   padding: 12px 32px;
-  background-color: #00E1E1;
-  color: #0a0a0a;
+  background-color: #9147FF;
+  color: #FFFFFF;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-}
 
-.error-modal-button:hover {
-  background-color: #00c4c4;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 225, 225, 0.4);
-}
+  &:hover {
+    background-color: #772CE8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(145, 71, 255, 0.4);
+  }
 
-.error-modal-button:active {
-  transform: translateY(0);
+  &:active {
+    transform: translateY(0);
+  }
 }
-

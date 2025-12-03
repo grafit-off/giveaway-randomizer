@@ -1,0 +1,165 @@
+.app {
+  min-height: 100vh;
+  background-color: #0E0E10;
+  color: #EFEFF1;
+  padding: 20px;
+  margin-left: 0;
+  margin-right: 25%;
+
+  &.chatSidebarHidden {
+    margin-right: 3%;
+  }
+}
+
+.appMain {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+  min-height: calc(100vh - 40px);
+}
+
+.participantsList {
+  padding: 30px;
+  background-color: #18181B;
+  border-radius: 12px;
+  border: 1px solid #1F1F23;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.participantsListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.participantsListTitle {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #fff;
+}
+
+.removeAllButton {
+  padding: 8px 16px;
+  background-color: #e74c3c;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.participantsGrid {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.participantsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.participantBadge {
+  padding: 4px 4px 4px 4px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.participantBadgeAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.participantBadgeName {
+  flex: 1;
+}
+
+.participantBadgeRemove {
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background: rgba(231, 76, 60, 0.8);
+    transform: scale(1.1);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    margin-left: 0;
+    margin-right: 20%;
+    padding: 20px 10px;
+
+    &.chatSidebarHidden {
+      margin-right: 3%;
+    }
+  }
+
+  .participantsList {
+    padding: 20px;
+  }
+}

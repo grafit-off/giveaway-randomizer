@@ -1,0 +1,150 @@
+.twitchChatSidebarContainer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 25%;
+  padding: 20px 20px 20px 0;
+  z-index: 100;
+}
+
+.twitchChatSidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: #18181B;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  border: 1px solid #1F1F23;
+}
+
+.twitchChatHeader {
+  padding: 20px;
+  background-color: #18181B;
+  border-bottom: 1px solid rgba(83, 83, 95, 0.48);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.twitchChatHeaderContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.twitchChatTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.twitchChatLink {
+  color: #9146ff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #a970ff;
+    text-decoration: underline;
+  }
+}
+
+.twitchChatIframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background-color: #0E0E10;
+}
+
+.twitchChatCloseButton {
+  background-color: transparent;
+  border: none;
+  color: #EFEFF1;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: #1F1F23;
+    color: #9147FF;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+      color: #EFEFF1;
+    }
+  }
+}
+
+.twitchChatSidebarHidden {
+  width: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #18181B;
+  border-radius: 12px;
+
+  &:hover {
+    background-color: #00E1E1;
+  }
+}
+
+.twitchChatToggleIcon {
+  color: #9147FF;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.twitchChatSidebarHidden:hover .twitchChatToggleIcon {
+  color: #0a0a0a;
+}
+
+.twitchChatSidebarDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: #18181B;
+  }
+
+  &:hover .twitchChatToggleIcon {
+    color: #9147FF;
+  }
+}
+
+@media (max-width: 768px) {
+  .twitchChatSidebar {
+    width: 20%;
+  }
+
+  .twitchChatSidebarHidden {
+    width: 3%;
+  }
+
+  .twitchChatHeader {
+    padding: 15px;
+  }
+
+  .twitchChatTitle {
+    font-size: 1.2rem;
+  }
+}
