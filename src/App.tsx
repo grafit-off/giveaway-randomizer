@@ -6,6 +6,8 @@ import { assignColorsToParticipants } from './functions/assignColorsToParticipan
 import { generateRandomColor } from './functions/generateRandomColor'
 import { loadParticipantsFromStorage } from './functions/loadParticipantsFromStorage'
 import { saveParticipantsToStorage } from './functions/saveParticipantsToStorage'
+import { loadSoundFromStorage } from './functions/loadSoundFromStorage'
+import { saveSoundToStorage } from './functions/saveSoundToStorage'
 import { AVAILABLE_COLORS } from './constants/availableColors'
 import { DEFAULT_CONFIG } from './constants/defaultConfig'
 import { RESIZE_TIMEOUT_MS } from './constants/resizeTimeoutMs'
@@ -33,7 +35,10 @@ function App() {
     message: ''
   })
   const [confirmRemoveAll, setConfirmRemoveAll] = useState<boolean>(false)
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true) // Default: enabled
+  // Load sound setting from localStorage on mount
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(() => {
+    return loadSoundFromStorage()
+  })
   // Hide chat sidebar by default on mobile devices
   const [chatSidebarVisible, setChatSidebarVisible] = useState<boolean>(() => {
     return window.innerWidth > 768
@@ -53,6 +58,11 @@ function App() {
   useEffect(() => {
     saveParticipantsToStorage(participants)
   }, [participants])
+
+  // Save sound setting to localStorage whenever it changes
+  useEffect(() => {
+    saveSoundToStorage(soundEnabled)
+  }, [soundEnabled])
 
   const participantsWithColors = useMemo(() => {
     return assignColorsToParticipants(participants)

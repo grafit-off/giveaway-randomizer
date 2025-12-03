@@ -327,8 +327,9 @@ export const Carousel: React.FC<CarouselProps> = ({
         <button
           className={styles.soundToggleButton}
           onClick={() => onSoundToggle(!soundEnabled)}
-          title={soundEnabled ? 'Disable sound' : 'Enable sound'}
-          aria-label={soundEnabled ? 'Disable sound' : 'Enable sound'}
+          disabled={isAnimating}
+          title={isAnimating ? 'Cannot toggle sound during animation' : (soundEnabled ? 'Disable sound' : 'Enable sound')}
+          aria-label={isAnimating ? 'Cannot toggle sound during animation' : (soundEnabled ? 'Disable sound' : 'Enable sound')}
         >
           {soundEnabled ? <HiVolumeUp size={24} /> : <HiVolumeOff size={24} />}
         </button>
