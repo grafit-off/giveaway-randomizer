@@ -206,7 +206,7 @@ function App() {
                           style={{ backgroundColor: participantColor }}
                         >
                           <img
-                            src={`/participant-${imageIndex + 1}.png`}
+                            src={`${import.meta.env.BASE_URL}participant-${imageIndex + 1}.png`}
                             alt={participant.name}
                             className={styles.participantBadgeAvatar}
                           />

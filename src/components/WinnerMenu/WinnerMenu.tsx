@@ -16,7 +16,7 @@ export const WinnerMenu: React.FC<WinnerMenuProps> = ({
         <h2 className={styles.winnerMenuTitle}>🎉 Winner Selected!</h2>
         <div className={styles.winnerMenuWinner}>
           <img 
-            src={`/participant-${(winnerIndex % IMAGE_COUNT) + 1}.png`}
+            src={`${import.meta.env.BASE_URL}participant-${(winnerIndex % IMAGE_COUNT) + 1}.png`}
             alt={winner.name}
             className={styles.winnerMenuAvatar}
           />

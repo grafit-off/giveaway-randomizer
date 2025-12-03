@@ -301,7 +301,7 @@ export const Carousel: React.FC<CarouselProps> = ({
               <div className={styles.tileGlow} />
               <div className={styles.tileContent}>
                 <img 
-                  src={`/participant-${(imageIndex % IMAGE_COUNT) + 1}.png`}
+                  src={`${import.meta.env.BASE_URL}participant-${(imageIndex % IMAGE_COUNT) + 1}.png`}
                   alt={participant.name}
                   className={styles.tileAvatar}
                 />

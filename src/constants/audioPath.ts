@@ -1,1 +1,1 @@
-export const AUDIO_PATH = '/scroll.mp3'
+export const AUDIO_PATH = `${import.meta.env.BASE_URL}scroll.mp3`
