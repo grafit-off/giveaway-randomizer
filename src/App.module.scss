@@ -339,13 +339,3 @@
     }
   }
 }
-
-// Touch-friendly improvements
-@media (hover: none) and (pointer: coarse) {
-  .participantBadgeRemove,
-  .removeAllButton,
-  .randomizeButton,
-  .soundToggleButton {
-    min-height: 44px; // Minimum touch target size
-  }
-}

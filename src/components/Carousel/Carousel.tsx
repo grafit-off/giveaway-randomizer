@@ -37,6 +37,24 @@ export const Carousel: React.FC<CarouselProps> = ({
   const idleStartTimeRef = useRef<number>()
   const [centeredTileIndex, setCenteredTileIndex] = useState<number | null>(null)
   const crossedTilesRef = useRef<Set<number>>(new Set())
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const lastTickTimeRef = useRef<number>(0)
+
+  // Preload and reuse a single audio instance to avoid creating many Audio objects per frame
+  useEffect(() => {
+    if (!soundEnabled) {
+      audioRef.current = null
+      return
+    }
+
+    const audio = new Audio(AUDIO_PATH)
+    audio.volume = AUDIO_VOLUME
+    audioRef.current = audio
+
+    return () => {
+      audioRef.current = null
+    }
+  }, [soundEnabled])
 
   const getContainerWidth = useRef(() => {
     if (carouselRef.current?.parentElement) {
@@ -84,6 +102,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       const containerWidth = getContainerWidth.current()
       const centerLinePosition = containerWidth / 2
       const finalPosition = calculateFinalPosition.current(containerWidth)
+      const now = performance.now()
 
       let position = 0
 
@@ -121,17 +140,29 @@ export const Carousel: React.FC<CarouselProps> = ({
           if (elapsed < travelDuration && !crossedTilesRef.current.has(i)) {
             crossedTilesRef.current.add(i)
 
-            if (soundEnabled) {
-              const audio = new Audio(AUDIO_PATH)
-              audio.volume = AUDIO_VOLUME
-              audio.currentTime = 0
-              audio.play().catch(err => console.error('Audio play failed:', err))
+            // Throttle sound ticks and reuse a single Audio instance
+            if (soundEnabled && audioRef.current) {
+              const MIN_TICK_INTERVAL = 70 // ms between ticks
+              if (now - lastTickTimeRef.current >= MIN_TICK_INTERVAL) {
+                const audio = audioRef.current
+                audio.currentTime = 0
+                audio
+                  .play()
+                  .then(() => {
+                    lastTickTimeRef.current = now
+                  })
+                  .catch(err => console.error('Audio play failed:', err))
+              }
             }
           }
+
+          // We found the centered tile, no need to check the rest
+          break
         }
       }
 
-      setCenteredTileIndex(currentCenteredTile)
+      // Only update state when the centered tile actually changes
+      setCenteredTileIndex(prev => (prev !== currentCenteredTile ? currentCenteredTile : prev))
 
       if (elapsed < animationRuntime) {
         animationFrameRef.current = requestAnimationFrame(animate)

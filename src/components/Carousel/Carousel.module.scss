@@ -161,6 +161,10 @@
 .tileCentered {
   box-shadow: 0 0 20px rgba(145, 71, 255, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
   animation: centeredGlow 1.5s ease-in-out infinite;
+
+  @media (max-width: 768px) {
+    box-shadow: 0 0 14px rgba(145, 71, 255, 0.6), 0 2px 6px rgba(0, 0, 0, 0.25);
+  }
 }
 
 @keyframes centeredGlow {
@@ -284,9 +288,7 @@
   }
 
   .soundToggleButton {
-    padding: 14px;
     width: 100%;
-    min-height: 44px;
   }
 
   .carouselEmpty {
@@ -329,21 +331,10 @@
   .randomizeButton {
     padding: 12px 20px;
     font-size: 0.95rem;
-    min-height: 44px; // Touch-friendly
     width: 100%;
   }
 
   .soundToggleButton {
-    min-height: 44px; // Touch-friendly
     width: 100%;
-  }
-}
-
-// Touch-friendly improvements
-@media (hover: none) and (pointer: coarse) {
-  .randomizeButton,
-  .soundToggleButton {
-    min-height: 44px;
-    -webkit-tap-highlight-color: rgba(145, 71, 255, 0.3);
   }
 }

@@ -190,14 +190,5 @@
   .winnerMenuButton {
     padding: 12px 16px;
     font-size: 0.95rem;
-    min-height: 44px; // Touch-friendly
-  }
-}
-
-// Touch-friendly improvements
-@media (hover: none) and (pointer: coarse) {
-  .winnerMenuButton {
-    min-height: 44px;
-    -webkit-tap-highlight-color: rgba(145, 71, 255, 0.3);
   }
 }
