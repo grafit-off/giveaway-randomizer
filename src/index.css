@@ -34,9 +34,14 @@ body {
 
 /* Prevent text size adjustment on iOS */
 @media screen and (max-width: 768px) {
-  input,
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
   textarea,
   select {
-    font-size: 16px !important;
+    font-size: 16px;
   }
 }

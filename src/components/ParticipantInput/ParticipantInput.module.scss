@@ -38,6 +38,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  height: fit-content;
 
   &:hover:not(:disabled) {
     background-color: #772CE8;
@@ -59,6 +60,9 @@
     flex-direction: column;
     gap: 10px;
     max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .participantInputField {
@@ -81,8 +85,8 @@
   }
 
   .participantInputButton {
-    padding: 8px 16px;
-    font-size: 0.9rem;
+    padding: 10px 20px;
+    font-size: 0.95rem;
     min-height: 44px; // Touch-friendly
   }
 }

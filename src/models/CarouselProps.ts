@@ -10,5 +10,6 @@ export interface CarouselProps {
   soundEnabled: boolean
   onSoundToggle: (enabled: boolean) => void
   onStartRandomize: () => void
+  onCancelAnimation: () => void
   canStart: boolean
 }

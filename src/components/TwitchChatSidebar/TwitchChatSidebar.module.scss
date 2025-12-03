@@ -26,6 +26,8 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
+  position: relative;
+  z-index: 101;
 }
 
 .twitchChatHeaderContent {
@@ -60,6 +62,7 @@
   width: 100%;
   border: none;
   background-color: #0E0E10;
+  pointer-events: auto;
 }
 
 .twitchChatCloseButton {
@@ -77,6 +80,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 102;
 
   svg {
     width: 1.5rem;
@@ -99,19 +104,26 @@
   }
 }
 
+.twitchChatSidebarContainer {
+  @media (min-width: 769px) {
+    &:not(.visible) {
+      width: max(3%, 50px);
+    }
+  }
+}
+
 .twitchChatSidebarHidden {
-  width: 3%;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #18181B;
-  border-radius: 12px;
+  overflow: visible;
 
   &:hover {
-    background-color: #00E1E1;
+    background-color: #1F1F23;
   }
 }
 
@@ -164,6 +176,20 @@
     &.visible {
       transform: translateY(0);
     }
+
+    &:not(.visible) {
+      width: auto;
+      height: auto;
+      top: auto;
+      bottom: 20px;
+      right: 20px;
+      left: auto;
+      transform: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      z-index: 199;
+    }
   }
 
   .twitchChatSidebar {
@@ -182,8 +208,13 @@
     bottom: 20px;
     right: 20px;
     top: auto;
+    left: auto;
     width: 56px;
     height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+    max-width: 56px;
+    max-height: 56px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -192,9 +223,10 @@
     cursor: pointer;
     background-color: #9147FF;
     box-shadow: 0 4px 12px rgba(145, 71, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 199;
+    z-index: 201;
     transition: all 0.3s ease;
     border: none;
+    aspect-ratio: 1;
 
     &:hover {
       background-color: #772CE8;
@@ -211,6 +243,9 @@
     color: #FFFFFF;
     font-size: 1.5rem;
     transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .twitchChatSidebarHidden:hover .twitchChatToggleIcon {

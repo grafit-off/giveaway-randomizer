@@ -13,22 +13,24 @@ export function TwitchChatSidebar({ channel, isVisible, onToggle, disabled = fal
 
   if (!isVisible) {
     return (
-      <div
-        className={`${styles.twitchChatSidebar} ${styles.twitchChatSidebarHidden} ${disabled ? styles.twitchChatSidebarDisabled : ''}`}
-        onClick={handleToggle}
-        title={disabled ? "Cannot toggle chat during animation" : "Show Twitch Chat"}
-        role="button"
-        tabIndex={disabled ? -1 : 0}
-        onKeyDown={(e) => {
-          if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
-            e.preventDefault()
-            handleToggle()
-          }
-        }}
-        aria-label="Show Twitch Chat"
-        aria-disabled={disabled}
-      >
-        <HiChevronUp className={styles.twitchChatToggleIcon} />
+      <div className={`${styles.twitchChatSidebarContainer} ${isVisible ? styles.visible : ''}`}>
+        <div
+          className={`${styles.twitchChatSidebar} ${styles.twitchChatSidebarHidden} ${disabled ? styles.twitchChatSidebarDisabled : ''}`}
+          onClick={handleToggle}
+          title={disabled ? "Cannot toggle chat during animation" : "Show Twitch Chat"}
+          role="button"
+          tabIndex={disabled ? -1 : 0}
+          onKeyDown={(e) => {
+            if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
+              e.preventDefault()
+              handleToggle()
+            }
+          }}
+          aria-label="Show Twitch Chat"
+          aria-disabled={disabled}
+        >
+          <HiChevronUp className={styles.twitchChatToggleIcon} />
+        </div>
       </div>
     )
   }
@@ -49,6 +51,7 @@ export function TwitchChatSidebar({ channel, isVisible, onToggle, disabled = fal
             </a>
           </div>
           <button
+            type="button"
             className={styles.twitchChatCloseButton}
             onClick={handleToggle}
             disabled={disabled}

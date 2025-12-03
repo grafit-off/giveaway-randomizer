@@ -83,6 +83,7 @@
   position: relative;
   height: 300px;
   padding: 0 15px;
+  box-sizing: border-box;
   mask-image: linear-gradient(
     to right,
     transparent 0%,
@@ -117,6 +118,8 @@
   box-shadow: 0 0 10px rgba(145, 71, 255, 0.6),
               0 0 20px rgba(145, 71, 255, 0.4);
   pointer-events: none;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .carouselTrack {
@@ -145,6 +148,8 @@
   transition: border-color 0.2s ease-out, transform 0.1s ease-out, box-shadow 0.2s ease-out;
   transform-origin: center center;
   z-index: 1;
+  min-width: 180px;
+  max-width: 180px;
 }
 
 .tileCentered {
@@ -238,18 +243,20 @@
   }
 
   .carouselWrapper {
-    height: 220px;
+    height: 280px;
     padding: 0 10px;
   }
 
   .carouselTile {
-    height: 160px;
-    margin-top: 30px;
-    margin-right: 8px;
+    height: 200px;
+    margin-top: 40px;
+    margin-right: 10px;
+    min-width: 180px;
+    max-width: 180px;
   }
 
   .tileAvatar {
-    height: 130px;
+    height: 160px;
   }
 
   .tileName {
@@ -271,8 +278,9 @@
   }
 
   .soundToggleButton {
-    padding: 10px;
+    padding: 14px;
     width: 100%;
+    min-height: 44px;
   }
 
   .carouselEmpty {
@@ -292,18 +300,20 @@
   }
 
   .carouselWrapper {
-    height: 180px;
+    height: 240px;
     padding: 0 8px;
   }
 
   .carouselTile {
-    height: 140px;
-    margin-top: 20px;
-    margin-right: 6px;
+    height: 180px;
+    margin-top: 30px;
+    margin-right: 10px;
+    min-width: 180px;
+    max-width: 180px;
   }
 
   .tileAvatar {
-    height: 110px;
+    height: 140px;
   }
 
   .tileName {

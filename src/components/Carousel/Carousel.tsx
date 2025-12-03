@@ -27,6 +27,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   soundEnabled,
   onSoundToggle,
   onStartRandomize,
+  onCancelAnimation,
   canStart
 }) => {
   const carouselRef = useRef<HTMLDivElement>(null)
@@ -151,6 +152,15 @@ export const Carousel: React.FC<CarouselProps> = ({
       }
     }
   }, [isAnimating, winnerIndex, participants, config, onAnimationComplete, soundEnabled])
+
+  // Reset carousel position when animation is canceled (isAnimating becomes false and winnerIndex is null)
+  useEffect(() => {
+    if (!isAnimating && winnerIndex === null && carouselRef.current) {
+      carouselRef.current.style.transform = 'translateX(0px)'
+      setCenteredTileIndex(null)
+      crossedTilesRef.current.clear()
+    }
+  }, [isAnimating, winnerIndex])
 
   useEffect(() => {
     if (isAnimating || winnerIndex === null || participants.length === 0 || !carouselRef.current) {
@@ -324,10 +334,10 @@ export const Carousel: React.FC<CarouselProps> = ({
         </button>
         <button
           className={styles.randomizeButton}
-          onClick={onStartRandomize}
-          disabled={isAnimating || !canStart}
+          onClick={isAnimating ? onCancelAnimation : onStartRandomize}
+          disabled={!isAnimating && !canStart}
         >
-          {isAnimating ? 'Randomizing...' : '🎲 Spin'}
+          {isAnimating ? 'Cancel' : '🎲 Spin'}
         </button>
       </div>
     </div>

@@ -49,19 +49,6 @@ function App() {
     }, RESIZE_TIMEOUT_MS)
   }
 
-  // Update chat sidebar visibility on window resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768 && !chatSidebarVisible) {
-        // Auto-show on desktop if it was hidden
-        setChatSidebarVisible(true)
-      }
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [chatSidebarVisible])
-
   // Save participants to localStorage whenever they change
   useEffect(() => {
     saveParticipantsToStorage(participants)
@@ -117,6 +104,12 @@ function App() {
   const handleAnimationComplete = () => {
     setIsAnimating(false)
     setShowWinnerMenu(true)
+  }
+
+  const handleCancelAnimation = () => {
+    setIsAnimating(false)
+    setWinnerIndex(null)
+    setShowWinnerMenu(false)
   }
 
   const handleRemoveWinner = () => {
@@ -184,6 +177,7 @@ function App() {
           soundEnabled={soundEnabled}
           onSoundToggle={setSoundEnabled}
           onStartRandomize={handleStartRandomize}
+          onCancelAnimation={handleCancelAnimation}
           canStart={participantsWithColors.length > 0}
         />
 
