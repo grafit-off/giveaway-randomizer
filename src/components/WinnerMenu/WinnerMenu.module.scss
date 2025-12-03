@@ -47,6 +47,15 @@
   font-size: 2rem;
   margin-bottom: 30px;
   color: #9147FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.winnerMenuIcon {
+  font-size: 2rem;
+  color: #FFD700;
 }
 
 .winnerMenuWinner {
@@ -108,5 +117,87 @@
   &:hover {
     background-color: #00c4c4;
     transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .winnerMenu {
+    padding: 30px 20px;
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .winnerMenuTitle {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+
+  .winnerMenuIcon {
+    font-size: 1.5rem;
+  }
+
+  .winnerMenuWinner {
+    padding: 20px;
+    margin-bottom: 20px;
+    gap: 15px;
+  }
+
+  .winnerMenuAvatar {
+    width: 150px;
+    height: 150px;
+  }
+
+  .winnerMenuWinnerName {
+    font-size: 1.4rem;
+  }
+
+  .winnerMenuActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .winnerMenuButton {
+    width: 100%;
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .winnerMenu {
+    padding: 25px 15px;
+  }
+
+  .winnerMenuTitle {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    gap: 8px;
+  }
+
+  .winnerMenuIcon {
+    font-size: 1.3rem;
+  }
+
+  .winnerMenuAvatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .winnerMenuWinnerName {
+    font-size: 1.2rem;
+  }
+
+  .winnerMenuButton {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    min-height: 44px; // Touch-friendly
+  }
+}
+
+// Touch-friendly improvements
+@media (hover: none) and (pointer: coarse) {
+  .winnerMenuButton {
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(145, 71, 255, 0.3);
   }
 }

@@ -1,4 +1,5 @@
 import { TwitchChatSidebarProps } from '../../models/TwitchChatSidebarProps'
+import { HiChevronUp, HiX } from 'react-icons/hi'
 import styles from './TwitchChatSidebar.module.scss'
 
 export function TwitchChatSidebar({ channel, isVisible, onToggle, disabled = false }: TwitchChatSidebarProps) {
@@ -27,13 +28,13 @@ export function TwitchChatSidebar({ channel, isVisible, onToggle, disabled = fal
         aria-label="Show Twitch Chat"
         aria-disabled={disabled}
       >
-        <div className={styles.twitchChatToggleIcon}>▶</div>
+        <HiChevronUp className={styles.twitchChatToggleIcon} />
       </div>
     )
   }
 
   return (
-    <div className={styles.twitchChatSidebarContainer}>
+    <div className={`${styles.twitchChatSidebarContainer} ${isVisible ? styles.visible : ''}`}>
       <div className={styles.twitchChatSidebar}>
         <div className={styles.twitchChatHeader}>
           <div className={styles.twitchChatHeaderContent}>
@@ -54,7 +55,7 @@ export function TwitchChatSidebar({ channel, isVisible, onToggle, disabled = fal
             title={disabled ? "Cannot toggle chat during animation" : "Hide Twitch Chat"}
             aria-label="Hide Twitch Chat"
           >
-            ×
+            <HiX />
           </button>
         </div>
         <iframe

@@ -224,3 +224,110 @@
   color: #666;
   font-size: 1.2rem;
 }
+
+@media (max-width: 768px) {
+  .carouselContainer {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+  }
+
+  .carouselTitle {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .carouselWrapper {
+    height: 220px;
+    padding: 0 10px;
+  }
+
+  .carouselTile {
+    height: 160px;
+    margin-top: 30px;
+    margin-right: 8px;
+  }
+
+  .tileAvatar {
+    height: 130px;
+  }
+
+  .tileName {
+    font-size: 0.75rem;
+    padding: 4px;
+  }
+
+  .carouselControls {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .randomizeButton {
+    padding: 14px 24px;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .soundToggleButton {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .carouselEmpty {
+    padding: 40px 15px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carouselContainer {
+    padding: 12px;
+  }
+
+  .carouselTitle {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .carouselWrapper {
+    height: 180px;
+    padding: 0 8px;
+  }
+
+  .carouselTile {
+    height: 140px;
+    margin-top: 20px;
+    margin-right: 6px;
+  }
+
+  .tileAvatar {
+    height: 110px;
+  }
+
+  .tileName {
+    font-size: 0.7rem;
+  }
+
+  .randomizeButton {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    min-height: 44px; // Touch-friendly
+    width: 100%;
+  }
+
+  .soundToggleButton {
+    min-height: 44px; // Touch-friendly
+    width: 100%;
+  }
+}
+
+// Touch-friendly improvements
+@media (hover: none) and (pointer: coarse) {
+  .randomizeButton,
+  .soundToggleButton {
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(145, 71, 255, 0.3);
+  }
+}

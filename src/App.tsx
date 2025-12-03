@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
+import { HiX } from 'react-icons/hi'
 import { Participant } from './models/Participant'
 import { CarouselConfig } from './models/CarouselConfig'
 import { assignColorsToParticipants } from './functions/assignColorsToParticipants'
@@ -9,6 +10,7 @@ import { AVAILABLE_COLORS } from './constants/availableColors'
 import { DEFAULT_CONFIG } from './constants/defaultConfig'
 import { RESIZE_TIMEOUT_MS } from './constants/resizeTimeoutMs'
 import { IMAGE_COUNT } from './constants/imageCount'
+import { BASE_URL } from './constants/baseUrl'
 import { Carousel } from './components/Carousel/Carousel'
 import { ParticipantInput } from './components/ParticipantInput/ParticipantInput'
 import { WinnerMenu } from './components/WinnerMenu/WinnerMenu'
@@ -32,7 +34,10 @@ function App() {
   })
   const [confirmRemoveAll, setConfirmRemoveAll] = useState<boolean>(false)
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true) // Default: enabled
-  const [chatSidebarVisible, setChatSidebarVisible] = useState<boolean>(true) // Default: visible
+  // Hide chat sidebar by default on mobile devices
+  const [chatSidebarVisible, setChatSidebarVisible] = useState<boolean>(() => {
+    return window.innerWidth > 768
+  })
 
   // Handle chat sidebar toggle with position recalculation
   const handleChatSidebarToggle = () => {
@@ -43,6 +48,19 @@ function App() {
       window.dispatchEvent(new Event('resize'))
     }, RESIZE_TIMEOUT_MS)
   }
+
+  // Update chat sidebar visibility on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768 && !chatSidebarVisible) {
+        // Auto-show on desktop if it was hidden
+        setChatSidebarVisible(true)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [chatSidebarVisible])
 
   // Save participants to localStorage whenever they change
   useEffect(() => {
@@ -206,7 +224,7 @@ function App() {
                           style={{ backgroundColor: participantColor }}
                         >
                           <img
-                            src={`${import.meta.env.BASE_URL}participant-${imageIndex + 1}.png`}
+                            src={`${BASE_URL}participant-${imageIndex + 1}.png`}
                             alt={participant.name}
                             className={styles.participantBadgeAvatar}
                           />
@@ -218,7 +236,7 @@ function App() {
                             title="Remove participant"
                             aria-label={`Remove ${participant.name}`}
                           >
-                            ×
+                            <HiX />
                           </button>
                         </div>
                       )

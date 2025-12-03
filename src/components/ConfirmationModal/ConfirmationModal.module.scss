@@ -82,3 +82,48 @@
     transform: translateY(-2px);
   }
 }
+
+@media (max-width: 768px) {
+  .confirmationModal {
+    max-width: 90%;
+    width: 90%;
+  }
+
+  .confirmationModalContent {
+    padding: 25px 20px;
+  }
+
+  .confirmationModalTitle {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .confirmationModalMessage {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .confirmationModalButtons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .confirmationModalButton {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .confirmationModalContent {
+    padding: 20px 15px;
+  }
+
+  .confirmationModalTitle {
+    font-size: 1.2rem;
+  }
+
+  .confirmationModalMessage {
+    font-size: 0.9rem;
+  }
+}

@@ -133,6 +133,11 @@
   transition: all 0.2s ease;
   flex-shrink: 0;
 
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
   &:hover:not(:disabled) {
     background: rgba(231, 76, 60, 0.8);
     transform: scale(1.1);
@@ -151,15 +156,113 @@
 @media (max-width: 768px) {
   .app {
     margin-left: 0;
-    margin-right: 20%;
-    padding: 20px 10px;
+    margin-right: 0;
+    padding: 10px;
 
     &.chatSidebarHidden {
-      margin-right: 3%;
+      margin-right: 0;
     }
   }
 
+  .appMain {
+    height: auto;
+    min-height: calc(100vh - 20px);
+  }
+
   .participantsList {
-    padding: 20px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .participantsListHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+
+  .participantsListTitle {
+    font-size: 1.2rem;
+  }
+
+  .removeAllButton {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+
+  .participantsGrid {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .participantsColumn {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .participantBadge {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    flex: 0 0 auto;
+    min-width: 120px;
+    max-width: calc(50% - 4px);
+  }
+
+  .participantBadgeAvatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .participantBadgeName {
+    font-size: 0.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .participantBadgeRemove {
+    width: 20px;
+    height: 20px;
+    font-size: 1.2rem;
+
+    svg {
+      width: 0.85rem;
+      height: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 8px;
+  }
+
+  .appMain {
+    min-height: calc(100vh - 16px);
+  }
+
+  .participantsList {
+    padding: 12px;
+  }
+
+  .participantsListTitle {
+    font-size: 1.1rem;
+  }
+
+  .participantBadge {
+    min-width: calc(50% - 4px);
+    max-width: calc(50% - 4px);
+  }
+}
+
+// Touch-friendly improvements
+@media (hover: none) and (pointer: coarse) {
+  .participantBadgeRemove,
+  .removeAllButton,
+  .randomizeButton,
+  .soundToggleButton {
+    min-height: 44px; // Minimum touch target size
   }
 }

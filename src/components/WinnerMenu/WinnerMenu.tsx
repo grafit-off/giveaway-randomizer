@@ -1,5 +1,7 @@
 import { WinnerMenuProps } from '../../models/WinnerMenuProps'
 import { IMAGE_COUNT } from '../../constants/imageCount'
+import { BASE_URL } from '../../constants/baseUrl'
+import { HiSparkles } from 'react-icons/hi'
 import styles from './WinnerMenu.module.scss'
 
 export const WinnerMenu: React.FC<WinnerMenuProps> = ({
@@ -13,10 +15,13 @@ export const WinnerMenu: React.FC<WinnerMenuProps> = ({
   return (
     <div className={styles.winnerMenuOverlay}>
       <div className={styles.winnerMenu}>
-        <h2 className={styles.winnerMenuTitle}>🎉 Winner Selected!</h2>
+        <h2 className={styles.winnerMenuTitle}>
+          <HiSparkles className={styles.winnerMenuIcon} />
+          Winner Selected!
+        </h2>
         <div className={styles.winnerMenuWinner}>
           <img 
-            src={`${import.meta.env.BASE_URL}participant-${(winnerIndex % IMAGE_COUNT) + 1}.png`}
+            src={`${BASE_URL}participant-${(winnerIndex % IMAGE_COUNT) + 1}.png`}
             alt={winner.name}
             className={styles.winnerMenuAvatar}
           />

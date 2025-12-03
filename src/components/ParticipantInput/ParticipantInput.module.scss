@@ -53,3 +53,48 @@
     cursor: not-allowed;
   }
 }
+
+@media (max-width: 768px) {
+  .participantInput {
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .participantInputField {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  .participantInputButton {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .participantInputField {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .participantInputButton {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    min-height: 44px; // Touch-friendly
+  }
+}
+
+// Touch-friendly improvements
+@media (hover: none) and (pointer: coarse) {
+  .participantInputButton {
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(145, 71, 255, 0.3);
+  }
+
+  .participantInputField {
+    font-size: 16px; // Prevents zoom on iOS
+  }
+}

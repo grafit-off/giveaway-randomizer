@@ -14,6 +14,7 @@ import { CENTER_THRESHOLD_OFFSET } from '../../constants/centerThresholdOffset'
 import { IDLE_LOOP_MULTIPLIER } from '../../constants/idleLoopMultiplier'
 import { WINNER_BORDER_COLOR } from '../../constants/winnerBorderColor'
 import { AUDIO_PATH } from '../../constants/audioPath'
+import { BASE_URL } from '../../constants/baseUrl'
 import { calculateSmoothProgress } from '../../functions/calculateSmoothProgress'
 import styles from './Carousel.module.scss'
 
@@ -301,7 +302,7 @@ export const Carousel: React.FC<CarouselProps> = ({
               <div className={styles.tileGlow} />
               <div className={styles.tileContent}>
                 <img 
-                  src={`${import.meta.env.BASE_URL}participant-${(imageIndex % IMAGE_COUNT) + 1}.png`}
+                  src={`${BASE_URL}participant-${(imageIndex % IMAGE_COUNT) + 1}.png`}
                   alt={participant.name}
                   className={styles.tileAvatar}
                 />

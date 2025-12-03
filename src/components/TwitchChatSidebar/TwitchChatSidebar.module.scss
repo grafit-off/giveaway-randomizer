@@ -74,6 +74,14 @@
   transition: all 0.2s ease;
   line-height: 1;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 
   &:hover {
     background-color: #1F1F23;
@@ -110,12 +118,16 @@
 .twitchChatToggleIcon {
   color: #9147FF;
   font-size: 1.2rem;
-  font-weight: 700;
   transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.twitchChatSidebarHidden:hover .twitchChatToggleIcon {
-  color: #0a0a0a;
+@media (min-width: 769px) {
+  .twitchChatSidebarHidden:hover .twitchChatToggleIcon {
+    color: #0a0a0a;
+  }
 }
 
 .twitchChatSidebarDisabled {
@@ -132,19 +144,128 @@
 }
 
 @media (max-width: 768px) {
+  .twitchChatSidebarContainer {
+    position: fixed;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    max-height: 400px;
+    padding: 0;
+    z-index: 200;
+    transform: translateY(calc(100% - 50px));
+    transition: transform 0.3s ease;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+
+    &.visible {
+      transform: translateY(0);
+    }
+  }
+
   .twitchChatSidebar {
-    width: 20%;
+    height: 100%;
+    border-radius: 16px 16px 0 0;
+    border: none;
+    border-top: 1px solid #1F1F23;
+  }
+
+  .twitchChatSidebarContainer.visible {
+    transform: translateY(0);
   }
 
   .twitchChatSidebarHidden {
-    width: 3%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    top: auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    background-color: #9147FF;
+    box-shadow: 0 4px 12px rgba(145, 71, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 199;
+    transition: all 0.3s ease;
+    border: none;
+
+    &:hover {
+      background-color: #772CE8;
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(145, 71, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .twitchChatSidebarHidden .twitchChatToggleIcon {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .twitchChatSidebarHidden:hover .twitchChatToggleIcon {
+    color: #FFFFFF;
   }
 
   .twitchChatHeader {
-    padding: 15px;
+    padding: 12px 15px;
+    flex-wrap: wrap;
   }
 
   .twitchChatTitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .twitchChatLink {
+    font-size: 0.85rem;
+  }
+
+  .twitchChatCloseButton {
+    font-size: 1.3rem;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .twitchChatSidebarContainer {
+    height: 60vh;
+    max-height: 500px;
+  }
+
+  .twitchChatHeader {
+    padding: 10px 12px;
+  }
+
+  .twitchChatTitle {
+    font-size: 1rem;
+  }
+
+  .twitchChatSidebarHidden {
+    width: 52px;
+    height: 52px;
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .twitchChatToggleIcon {
+    font-size: 1.3rem;
   }
 }
